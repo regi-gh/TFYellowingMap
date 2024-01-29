@@ -1,88 +1,151 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>Display a popup on hover</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-<link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
-<style>
-body { margin: 0; padding: 0; }
-#map { position: absolute; top: 0; bottom: 0; width: 100%; }
-</style>
-<style>
-    .mapboxgl-popup {
-        max-width: 400px;
-        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    }
-</style>
-<div id="map"></div>
-<script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNqeXp4OTNiMjA2a2czbHIwMDdlbXN5aTUifQ.G9J1QkUm1SVmPy344aObeg';
-    //pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNscnk0amh3MzFrYXMybG9idjMyNmZ4eXcifQ.6yibxgcKf69lkuD3UNPUpw
-    const map = new mapboxgl.Map({
-        container: 'map',
-        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-        style: 'mapbox://styles/mapbox/standard',
-        sprite: "mapbox://sprites/mapbox/standard",
-        center: [-87.629799, 41.878113], // lon, lat
-        zoom: 4
-    });
+    <meta charset="utf-8">
+    <title>Display a popup on hover</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
-    map.on('load', () => {
-        map.addSource('places', {
-            'type': 'geojson',
-            'data': './placesdata1.geojson'
-        });
-        // Add a layer showing the places.
-        map.addLayer({
-            'id': 'places',
-            'type': 'circle',
-            'source': 'places',
-            'paint': {
-                'circle-color': ['get', 'color'],
-                'circle-radius': 6,
-                'circle-stroke-width': 2,
-                'circle-stroke-color': '#ffffff'
-            }
-            /*'layout': {
-                'icon-image': ['get', 'icon'],
-                'icon-allow-overlap': true
-            }*/
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <style>
+        .mapboxgl-popup {
+            max-width: 400px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <div id="map"></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNqeXp4OTNiMjA2a2czbHIwMDdlbXN5aTUifQ.G9J1QkUm1SVmPy344aObeg';
+        //pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNscnk0amh3MzFrYXMybG9idjMyNmZ4eXcifQ.6yibxgcKf69lkuD3UNPUpw
+        const map = new mapboxgl.Map({
+            container: 'map',
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/standard',
+            sprite: "mapbox://sprites/mapbox/standard",
+            center: [-87.629799, 41.878113], // lon, lat
+            zoom: 4
         });
 
-        // Create a popup, but don't add it to the map yet.
-        const popup = new mapboxgl.Popup({
-            closeButton: false,
-            closeOnClick: false
+        map.addControl(new mapboxgl.NavigationControl());
+
+        map.on('load', () => {
+            map.addSource('places', {
+                'type': 'geojson',
+                'cluster': true,
+                'clusterRadius': 80,
+                'clusterProperties': {
+                    'Yct': ['+', ['case', ['==', ['get', 'color'], 'yellow'], 1, 0]],
+                    'Gct': ['+', ['case', ['==', ['get', 'color'], 'green'], 1, 0]]
+                },
+                'data': './placesdata1.geojson'
+            });
+            // Add a layer showing the places.
+            map.addLayer({
+                'id': 'places',
+                'type': 'circle',
+                'source': 'places',
+                //'filter': ['==', 'color', 'green'],
+                'paint': {
+                    //'circle-color': 'green',
+                    //'circle-radius': 6,
+                    //'circle-stroke-width': 2,
+                    //'circle-stroke-color': '#ffffff'
+                    'circle-color':
+                        //['case', 
+                        //    ['all',['>', ['get', 'Gct'], 0],['>', ['get', 'Yct'], 0]], 'orange',
+                        //    ['>', ['get', 'Yct'], 0], 'yellow',
+                        //    'green'
+                        //],
+                        ['case',
+                            // unclustered
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false], ['match', ['get', 'color'], 'yellow', true, false]], 'orange',
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'yellow', true, false]], 'yellow',
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false]], 'green',
+                            // clustered data
+                            ['all', ['>', ['get', 'Gct'], 0], ['>', ['get', 'Yct'], 0]], 'orange',
+                            ['>', ['get', 'Yct'], 0], 'yellow',
+                            ['>', ['get', 'Gct'], 0], 'green',
+                            'gray'
+                        ],
+                    'circle-radius': 20
+                }
+                /*'layout': {
+                    'icon-image': ['get', 'icon'],
+                    'icon-allow-overlap': true
+                }*/
+            });
+
+            map.addLayer({
+                id: 'places-count',
+                type: 'symbol',
+                source: 'places',
+                //filter: ['has', 'point_count'],
+                layout: {
+                    'text-field':
+                        ['case',
+                            // unclustered
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false], ['match', ['get', 'color'], 'yellow', true, false]], 'Good:1\nYellow:1',
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'yellow', true, false]], 'Yellow:1',
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false]], 'Good:1',
+                            // clustered data
+                            ['all', ['>', ['get', 'Gct'], 0], ['>', ['get', 'Yct'], 0]], ['concat', 'Good:', ['get', 'Gct'], '\nYellow:', ['get', 'Yct']],
+                            ['>', ['get', 'Yct'], 0], ['concat', 'Yellow:', ['get', 'Yct']],
+                            ['>', ['get', 'Gct'], 0], ['concat', 'Good:', ['get', 'Gct']],
+                            '?'
+                        ],
+                    'text-size': 10
+                }
+            });
+
+            /*
+            // Create a popup, but don't add it to the map yet.
+            const popup = new mapboxgl.Popup({
+                closeButton: false,
+                closeOnClick: false
+            });
+    
+            map.on('mouseenter', 'places', (e) => {
+                // Change the cursor style as a UI indicator.
+                map.getCanvas().style.cursor = 'pointer';
+    
+                // Copy coordinates array.
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const description = e.features[0].properties.description;
+    
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+    
+                // Populate the popup and set its coordinates
+                // based on the feature found.
+                popup.setLngLat(coordinates).setHTML(description).addTo(map);
+            });
+    
+            map.on('mouseleave', 'places', () => {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            });
+            */
+
         });
+    </script>
 
-        map.on('mouseenter', 'places', (e) => {
-            // Change the cursor style as a UI indicator.
-            map.getCanvas().style.cursor = 'pointer';
+    </body>
 
-            // Copy coordinates array.
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const description = e.features[0].properties.description;
-
-            // Ensure that if the map is zoomed out such that multiple
-            // copies of the feature are visible, the popup appears
-            // over the copy being pointed to.
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-
-            // Populate the popup and set its coordinates
-            // based on the feature found.
-            popup.setLngLat(coordinates).setHTML(description).addTo(map);
-        });
-
-        map.on('mouseleave', 'places', () => {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
-        });
-    });
-</script>
-
-</body>
 </html>
