@@ -28,13 +28,13 @@
     </style>
     <div id="map"></div>
     <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNqeXp4OTNiMjA2a2czbHIwMDdlbXN5aTUifQ.G9J1QkUm1SVmPy344aObeg';
-        //pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNscnk0amh3MzFrYXMybG9idjMyNmZ4eXcifQ.6yibxgcKf69lkuD3UNPUpw
+        //mapboxgl.accessToken = 'pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNqeXp4OTNiMjA2a2czbHIwMDdlbXN5aTUifQ.G9J1QkUm1SVmPy344aObeg';//mapbox token
+        mapboxgl.accessToken = 'pk.eyJ1IjoicmFzcGVpdGlhIiwiYSI6ImNscnk0amh3MzFrYXMybG9idjMyNmZ4eXcifQ.6yibxgcKf69lkuD3UNPUpw';
         const map = new mapboxgl.Map({
             container: 'map',
             // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
             style: 'mapbox://styles/mapbox/light-v11',
-            sprite: "mapbox://sprites/mapbox/light-v11",
+            //sprite: "mapbox://sprites/mapbox/light-v11",
             center: [-87.629799, 41.878113], // lon, lat
             zoom: 4
         });
@@ -50,7 +50,21 @@
                     'Yct': ['+', ['case', ['==', ['get', 'color'], 'yellow'], 1, 0]],
                     'Gct': ['+', ['case', ['==', ['get', 'color'], 'green'], 1, 0]]
                 },
-                'data': './placesdata1.geojson'
+                'data': //'./placesdata1.geojson'
+                {
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Siege SG-EX Soundblaster (Takara Ver.)<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:A2721<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        }]}
+
             });
             // Add a layer showing the places.
             map.addLayer({
