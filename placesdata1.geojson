@@ -2,14 +2,156 @@
     "type": "FeatureCollection",
     "features": [
         {
-            "type": "Feature",
-            "geometry": {
+            "type": "Feature", "geometry": {
                 "type": "Point",
-                "coordinates": [-87.906471, 43.038902]
+                "coordinates": [-2.798430, 54.049591]
             },
             "properties": {
                 "color":"green",
-                "description": "yellow|normal<br />\nfigure: <br />\ncity, state <br />\nmember: <br />\nbatch no: <br />\ndisplay lighting: natural|artificial <br />\naverage home temp: degrees F|C <br />\ndehumidifier in home: yes|no <br />\n"
+                "description": "figure:Siege SG-EX Soundblaster (Takara Ver.)<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:A2721<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:War for Cybertron Trilogy Megatron<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:F0969 10061<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:War for Cybertron Trilogy Nemesis Prime <br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:F0469 03601<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Premium Finish PF WFC-04 Starscream<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:F6915 13091<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Kingdom WFC-K9 Cyclonus<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Kingdom WFC-K18 Dinobot<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Kingdom WFC-K40 Grimlock<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Kingdom WFC-K27 Rhinox<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Studio Series SS-82 Ratchet <br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:F3163<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Studio Series SS-103 Rhinox<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:V297??<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"green",
+                "description": "figure:Studio Series SS-105 Mirage<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"yellow",
+                "description": "figure:Generations Selects Artfire<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:<br />owner:second<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"yellow",
+                "description": "figure:Buzzworthy Bumblebee Dinobot<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:<br />owner:second<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
+            }
+        },
+
+        {
+            "type": "Feature", "geometry": {
+                "type": "Point",
+                "coordinates": [-2.798430, 54.049591]
+            },
+            "properties": {
+                "color":"yellow",
+                "description": "figure:Kingdom WFC-K35 Tigatron<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:F0696 12741<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
             }
         }
     ]
