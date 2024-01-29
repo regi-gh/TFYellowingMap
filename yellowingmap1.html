@@ -23,7 +23,9 @@
     <style>
         .mapboxgl-popup {
             max-width: 400px;
+            max-height: 800px;
             font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            overflow-y: auto;
         }
     </style>
     <div id="map"></div>
@@ -48,22 +50,11 @@
                 'clusterRadius': 80,
                 'clusterProperties': {
                     'Yct': ['+', ['case', ['==', ['get', 'color'], 'yellow'], 1, 0]],
-                    'Gct': ['+', ['case', ['==', ['get', 'color'], 'green'], 1, 0]]
+                    'Gct': ['+', ['case', ['==', ['get', 'color'], 'green'], 1, 0]],
+                    'clDesc': ['concat', ['concat', ['get', 'description'], '\n']]
                 },
-                'data': //'./placesdata1.geojson'
-                {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature", "geometry": {
-                "type": "Point",
-                "coordinates": [-2.798430, 54.049591]
-            },
-            "properties": {
-                "color":"green",
-                "description": "figure:Siege SG-EX Soundblaster (Takara Ver.)<br />Lancaster, UK<br />member:@Hobart Paving<br />batch no:A2721<br />owner:<br />display lighting:Mix of low-energy bulb and natural lighting<br />avg home temp:18°C<br />dehumidifier:Yes, in floor below toys"
-            }
-        }]}
+                'data': './placesdata1.geojson'
+                //{ "type": "FeatureCollection", "features": [ ]}
 
             });
             // Add a layer showing the places.
@@ -81,15 +72,15 @@
                         ['case',
                             // unclustered
                             ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false], ['match', ['get', 'color'], 'yellow', true, false]], 'orange',
-                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'yellow', true, false]], 'yellow',
-                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false]], 'green',
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'yellow', true, false]], '#F6E411', //yellow
+                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false]], '#11F62C', //green
                             // clustered data
                             ['all', ['>', ['get', 'Gct'], 0], ['>', ['get', 'Yct'], 0]], 'orange',
-                            ['>', ['get', 'Yct'], 0], 'yellow',
-                            ['>', ['get', 'Gct'], 0], 'green',
+                            ['>', ['get', 'Yct'], 0], '#F6E411', //yellow
+                            ['>', ['get', 'Gct'], 0], '#11F62C', //green
                             'gray'
                         ],
-                    'circle-radius': 20
+                    'circle-radius': 10
                 }
             });
 
@@ -100,53 +91,54 @@
                 //filter: ['has', 'point_count'],
                 layout: {
                     'text-field':
-                        ['case',
-                            // unclustered
-                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false], ['match', ['get', 'color'], 'yellow', true, false]], 'Good:1\nYellow:1',
-                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'yellow', true, false]], 'Yellow:1',
-                            ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false]], 'Good:1',
-                            // clustered data
-                            ['all', ['>', ['get', 'Gct'], 0], ['>', ['get', 'Yct'], 0]], ['concat', 'Good:', ['get', 'Gct'], '\nYellow:', ['get', 'Yct']],
-                            ['>', ['get', 'Yct'], 0], ['concat', 'Yellow:', ['get', 'Yct']],
-                            ['>', ['get', 'Gct'], 0], ['concat', 'Good:', ['get', 'Gct']],
-                            '?'
+                        ['format',
+                            ['case',
+                                // unclustered
+                                ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false], ['match', ['get', 'color'], 'yellow', true, false]], 'Good:1\nYellow:1',
+                                ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'yellow', true, false]], 'Yellow:1',
+                                ['all', ['==', ['get', 'point_count'], null], ['match', ['get', 'color'], 'green', true, false]], 'Good:1',
+                                // clustered data
+                                ['all', ['>', ['get', 'Gct'], 0], ['>', ['get', 'Yct'], 0]], ['concat', 'Good:', ['get', 'Gct'], '\nYellow:', ['get', 'Yct']],
+                                ['>', ['get', 'Yct'], 0], ['concat', 'Yellow:', ['get', 'Yct']],
+                                ['>', ['get', 'Gct'], 0], ['concat', 'Good:', ['get', 'Gct']],
+                                '?'
+                            ], { 'font-scale': 1.2, 'text-color': 'blue' }
                         ],
-                    'text-size': 10
+                    'text-anchor': 'top',
+                    'text-offset': [0, 0.75],
+                    'text-size': 9
                 }
             });
 
-            /*
-            // Create a popup, but don't add it to the map yet.
-            const popup = new mapboxgl.Popup({
-                closeButton: false,
-                closeOnClick: false
-            });
-    
-            map.on('mouseenter', 'places', (e) => {
-                // Change the cursor style as a UI indicator.
-                map.getCanvas().style.cursor = 'pointer';
-    
+            // When a click event occurs on a feature in the places layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            map.on('click', 'places', (e) => {
                 // Copy coordinates array.
                 const coordinates = e.features[0].geometry.coordinates.slice();
-                const description = e.features[0].properties.description;
-    
+                const description = (!e.features[0].properties.clDesc ? e.features[0].properties.description : e.features[0].properties.clDesc);
+
                 // Ensure that if the map is zoomed out such that multiple
                 // copies of the feature are visible, the popup appears
                 // over the copy being pointed to.
                 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
-    
-                // Populate the popup and set its coordinates
-                // based on the feature found.
-                popup.setLngLat(coordinates).setHTML(description).addTo(map);
+
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(description)
+                    .addTo(map);
             });
-    
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'places', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
             map.on('mouseleave', 'places', () => {
                 map.getCanvas().style.cursor = '';
-                popup.remove();
             });
-            */
 
         });
     </script>
