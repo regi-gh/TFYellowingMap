@@ -9,7 +9,16 @@
             },
             "properties": {
                 "color":"green",
-                "description": "hello"
+                "description": "\
+yellow|normal<br />\
+figure: <br />\
+city, state <br />\
+member: <br />\
+batch no: <br />\
+display lighting: natural|artificial <br />\
+average home temp: degrees F|C <br />\
+dehumidifier in home: yes|no <br />\
+"
             }
         }
     ]
