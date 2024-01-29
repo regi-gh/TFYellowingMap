@@ -10,8 +10,6 @@
 body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 </style>
-</head>
-<body>
 <style>
     .mapboxgl-popup {
         max-width: 400px;
@@ -34,7 +32,7 @@ body { margin: 0; padding: 0; }
     map.on('load', () => {
         map.addSource('places', {
             'type': 'geojson',
-            'data': 'https://drive.google.com/uc?export=download&id=1jxdK5ZbJVPyvWBstL4iQ19pMfnzsvvAA'
+            'data': './placesdata1.geojson'
         });
         // Add a layer showing the places.
         map.addLayer({
